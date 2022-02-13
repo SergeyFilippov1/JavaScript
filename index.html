@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор</title>
+</head>
+<style>
+body {
+    background-color: #b5fd8d;
+    user-select: none;
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 4px;
+    background-color: #212121;
+    padding: 4px;
+    border-radius: 5px;
+    max-width: 450px;
+    font-family: "Tahoma";
+}
+.item {
+background-color: aqua;
+color: black;
+padding: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 22px;
+cursor: pointer;
+font-weight: bold;
+}
+form {
+    max-width: 100%;
+}
+input {
+    width: 100%;
+    height: 60px;
+    border: none;
+    font-size: 30px;
+    outline: none;
+    text-align: right;
+}
+.input {
+    grid-column: 1/-1;
+    padding: 0;
+}
+.upper {
+    font-size: 20px;
+    margin-left: 3px;
+    margin-top: -20px;
+}
+.clean, .back, .percent, .devide, .mul, .sub, .add {
+    color: rgb(50, 175, 88);
+}
+</style>
+<body>
+<div class="container">
+    <div class="item input"><form name="form"><input type="text" name="textview" readonly></form></div>
+    <div class="item" onclick="">deg</div>
+    <div class="item" onclick="f('sin')">sin</div>
+    <div class="item" onclick="f('cos')">cos</div>
+    <div class="item" onclick="f('tan')">tan</div>
+    <div class="item" onclick="f('ctg')">ctg</div>
+
+    <div class="item" onclick="operation('^')">x<span class="upper">y</span></div>
+    <div class="item" onclick="log('lg')">lg</div>
+    <div class="item" onclick="log('ln')">ln</div>
+    <div class="item" onclick="insert('(')">(</div>
+    <div class="item" onclick="insert(')')">)</div>
+
+    <div class="item" onclick="operation('sqr')">x<span class="upper">2</span></div>
+    <div class="item clean" onclick="clean()">C</div>
+    <div class="item back" onclick="back()">&larr;</div>
+    <div class="item percent" onclick="percent()">%</div>
+    <div class="item divide" onclick="insert('/')">&divide;</div>
+    
+    <div class="item" onclick="operation('^-1')">x<span class="upper">-1</span></div>
+    <div class="item" onclick="insert('7')">7</div>
+    <div class="item" onclick="insert('8')">8</div>
+    <div class="item" onclick="insert('9')">9</div>
+    <div class="item mul" onclick="insert('*')">&times;</div>
+     
+    <div class="item" onclick="operation('sqrt')">&radic;x</div>
+    <div class="item" onclick="insert('4')">4</div> 
+    <div class="item" onclick="insert('5')">5</div>
+    <div class="item" onclick="insert('6')">6</div>
+    <div class="item sub" onclick="insert('-')">-</div>
+
+    <div class="item" onclick="fact()">x!</div>
+    <div class="item" onclick="insert('1')">1</div>
+    <div class="item" onclick="insert('2')">2</div>
+    <div class="item" onclick="insert('3')">3</div>
+    <div class="item add" onclick="insert('+')">+</div>
+
+    <div class="item" onclick="pi()">&prod;</div>
+    <div class="item" onclick="e()">e</div>
+    <div class="item zero" onclick="insert('0')">0</div>
+    <div class="item" onclick="insert('.')">.</div>
+    <div class="item equal" onclick="equal()">=</div>
+    
+</div>
+<script>
+    function insert(num) {
+    document.form.textview.value = document.form.textview.value + num;
+}
+function clean() {
+    document.form.textview.value = "";
+}
+function back() {
+    var exp = document.form.textview.value;
+    document.form.textview.value = exp.substring(0, exp.length - 1);
+}
+function equal() {
+    var exp = document.form.textview.value;
+    if (exp) {
+        document.form.textview.value = eval(exp);
+    }
+    }
+
+function percent() {
+    document.form.textview.value = eval(document.form.textview.value)/100;
+}
+function pi() {
+    document.form.textview.value = document.form.textview.value + Math.PI.toFixed(8);
+}
+function e() {
+    document.form.textview.value = document.form.textview.value + Math.E.toFixed(8);
+}
+function operation(name) {
+    if(name == "sqrt")
+    document.form.textview.value = Math.sqrt(eval(document.form.textview.value));
+    if(name == "sqr")
+    document.form.textview.value = Math.pow(eval(document.form.textview.value),2);
+    if(name == "^-1")
+    document.form.textview.value = Math.pow(eval(document.form.textview.value),-1);
+    if(name == "^")
+    document.form.textview.value = document.form.textview.value + "^";
+}
+function factorial(n) {
+    return (n != 1) ? n * factorial(n - 1) : 1;
+}
+function fact() {
+    document.form.textview.value = factorial(+eval(document.form.textview.value));
+}
+function log(name) {
+    if(name == 'lg') {
+    document.form.textview.value = Math.log10(eval(document.form.textview.value)).toFixed(8); 
+    }
+    if(name == 'ln') {
+    document.form.textview.value = Math.log(eval(document.form.textview.value)).toFixed(8); 
+}
+}
+function f(name) {
+    if(name == 'sin') {
+        document.form.textview.value = parseFloat(Math.sin(eval(document.form.textview.value)/180*Math.PI).toFixed(8).toString()); 
+    }
+    if(name == 'cos') {
+        document.form.textview.value = parseFloat(Math.cos(eval(document.form.textview.value)/180*Math.PI).toFixed(8).toString()); 
+    }
+    if(name == 'tan') {
+        document.form.textview.value = parseFloat(Math.tan(eval(document.form.textview.value)/180*Math.PI).toFixed(8).toString()); 
+    }
+    if(name == 'ctg') {
+        document.form.textview.value = parseFloat(1/Math.tan(eval(document.form.textview.value)/180*Math.PI).toFixed(8).toString()); 
+    }
+}
+ </script>
+    
+        
+</body>
+</html>
